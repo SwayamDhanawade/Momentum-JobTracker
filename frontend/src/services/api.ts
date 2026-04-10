@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { AxiosError } from 'axios';
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -16,12 +16,6 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    let userId = localStorage.getItem('userId');
-    if (!userId) {
-      userId = '1';
-      localStorage.setItem('userId', userId);
-    }
-    config.headers['X-User-Id'] = userId;
     return config;
   },
   (error: AxiosError) => {
@@ -34,7 +28,7 @@ api.interceptors.response.use(
   (error: AxiosError) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
-      localStorage.removeItem('userId');
+      localStorage.removeItem('user');
       window.location.href = '/login';
     }
     return Promise.reject(error);

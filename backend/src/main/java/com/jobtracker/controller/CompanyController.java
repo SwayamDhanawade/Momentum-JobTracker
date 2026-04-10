@@ -2,6 +2,7 @@ package com.jobtracker.controller;
 
 import com.jobtracker.dto.company.CompanyRequest;
 import com.jobtracker.dto.company.CompanyResponse;
+import com.jobtracker.security.SecurityUtils;
 import com.jobtracker.service.CompanyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +16,11 @@ import java.util.List;
 public class CompanyController {
     
     private final CompanyService companyService;
+    private final SecurityUtils securityUtils;
     
     @PostMapping
-    public ResponseEntity<CompanyResponse> create(
-            @Valid @RequestBody CompanyRequest request,
-            @RequestHeader("X-User-Id") Long userId) {
+    public ResponseEntity<CompanyResponse> create(@Valid @RequestBody CompanyRequest request) {
+        Long userId = securityUtils.getCurrentUserId();
         return ResponseEntity.ok(companyService.create(request, userId));
     }
     
@@ -29,7 +30,8 @@ public class CompanyController {
     }
     
     @GetMapping
-    public ResponseEntity<List<CompanyResponse>> getAll(@RequestHeader("X-User-Id") Long userId) {
+    public ResponseEntity<List<CompanyResponse>> getAll() {
+        Long userId = securityUtils.getCurrentUserId();
         return ResponseEntity.ok(companyService.getAllByUserId(userId));
     }
     

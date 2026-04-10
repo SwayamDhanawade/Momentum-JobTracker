@@ -1,69 +1,321 @@
 .interviews-page,
 .reminders-page {
-  padding: 20px;
+  padding: 0;
+}
+
+.interviews-page h1,
+.reminders-page h1 {
+  margin-bottom: 32px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 240px;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.filters button {
+  padding: 12px 20px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.filters button:hover {
+  background: var(--border-light);
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+
+.filters button.active {
+  background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+  color: white;
+  border-color: transparent;
+}
+
+.filters button.active:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
 .reminders-list,
 .interviews-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 16px;
 }
 
 .interview-card,
 .reminder-card {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: var(--surface);
+  padding: 28px;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  transition: all 0.25s ease;
+}
+
+.interview-card:hover,
+.reminder-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .reminder-card.completed {
   opacity: 0.6;
-  background: #f9f9f9;
+  background: var(--border-light);
+}
+
+.reminder-card.completed:hover {
+  transform: none;
 }
 
 .reminder-header,
 .interview-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.reminder-header > div,
+.interview-header > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.reminder-header h3,
+.interview-header h3 {
+  margin: 0 0 8px 0;
+  color: var(--text-primary);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.interview-header .company-name {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  margin: 0;
 }
 
 .reminder-type,
 .interview-type {
-  background: #333;
+  background: var(--primary);
   color: white;
-  padding: 4px 12px;
+  padding: 6px 14px;
   border-radius: 20px;
-  font-size: 0.85rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.completed-badge {
+  background: var(--secondary);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+  margin: 10px 0;
+  font-size: 0.9375rem;
+}
+
+.detail-icon {
+  font-size: 1.1rem;
+  opacity: 0.6;
 }
 
 .interview-details,
 .reminder-details {
-  margin: 10px 0;
-  color: #666;
+  margin: 20px 0;
 }
 
-.interview-details p,
-.reminder-details p {
-  margin: 5px 0;
+.meeting-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+  color: white !important;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
-.interviewer-info {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #eee;
+.meeting-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+  text-decoration: none;
+}
+
+.interviewer-info,
+.feedback-info {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.interviewer-info strong,
+.feedback-info strong {
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .description {
-  color: #666;
-  margin: 10px 0;
+  color: var(--text-secondary);
+  margin: 12px 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+.related-application {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.btn-complete {
+  margin-top: 20px;
+  padding: 12px 22px;
+  background: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-complete:hover {
+  background: var(--secondary-hover);
+  transform: translateY(-1px);
 }
 
 .no-data {
   text-align: center;
-  color: #999;
-  padding: 40px;
+  color: var(--text-muted);
+  padding: 64px 32px;
+  font-size: 0.9375rem;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  border: 2px dashed var(--border);
+  margin: 0;
+}
+
+.interview-form,
+.reminder-form {
+  background: var(--surface);
+  padding: 32px;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.interview-form h2,
+.reminder-form h2 {
+  margin: 0 0 28px 0;
+  color: var(--text-primary);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+
+.reminders-section {
+  margin-bottom: 36px;
+}
+
+.reminders-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 20px 0;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--border);
+}
+
+@media (max-width: 600px) {
+  .reminder-header,
+  .interview-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .reminder-type,
+  .interview-type,
+  .completed-badge {
+    align-self: flex-start;
+  }
+  
+  .interview-card,
+  .reminder-card {
+    padding: 20px;
+  }
 }

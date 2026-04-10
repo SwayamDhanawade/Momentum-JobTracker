@@ -17,6 +17,7 @@ export interface CompanyResponse {
   location?: string;
   logoUrl?: string;
   careersPageUrl?: string;
+  userId?: number;
   createdById?: number;
   createdAt?: string;
 }

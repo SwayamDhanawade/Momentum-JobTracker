@@ -29,15 +29,15 @@ function ApplicationsPage() {
     : applications.filter(app => app.statusName === filter);
 
   if (loading) {
-    return <div className="applications-page">Loading...</div>;
+    return <div className="applications-page"><div className="loading">Loading applications...</div></div>;
   }
 
   return (
     <div className="applications-page">
       <div className="page-header">
         <h1>Job Applications</h1>
-        <Link to="/applications/create" className="btn-primary">
-          Add Application
+        <Link to="/applications/create" className="btn-add">
+          + Add Application
         </Link>
       </div>
       
@@ -69,7 +69,12 @@ function ApplicationsPage() {
             </Link>
           ))
         ) : (
-          <p className="no-applications">No applications found. Click "Add Application" to get started!</p>
+          <div className="no-applications">
+            <p>No applications yet. Start tracking your job search!</p>
+            <Link to="/applications/create" className="btn-add">
+              + Add Your First Application
+            </Link>
+          </div>
         )}
       </div>
     </div>

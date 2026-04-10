@@ -92,6 +92,7 @@ public class DataInitializer implements CommandLineRunner {
                 .lastName("User")
                 .phone("1234567890")
                 .enabled(true)
+                .role("ROLE_USER")
                 .build();
             userRepository.save(defaultUser);
         }

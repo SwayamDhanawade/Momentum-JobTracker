@@ -1,23 +1,27 @@
 import type { ReactNode } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import ApplicationsPage from '../pages/applications/ApplicationsPage';
 import CreateApplicationPage from '../pages/applications/CreateApplicationPage';
+import EditApplicationPage from '../pages/applications/EditApplicationPage';
 import ApplicationDetailsPage from '../pages/applications/ApplicationDetailsPage';
 import InterviewsPage from '../pages/applications/InterviewsPage';
 import RemindersPage from '../pages/applications/RemindersPage';
+import ProfilePage from '../pages/profile/ProfilePage';
 import NotFoundPage from '../pages/applications/NotFoundPage';
 import Layout from '../components/layout/Layout';
-import authService from '../services/authService';
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
 function ProtectedRoute({ children }: ProtectedRouteProps) {
-  if (!authService.isAuthenticated()) {
+  const { isAuthenticated } = useAuth();
+  
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
   return <Layout>{children}</Layout>;
@@ -59,6 +63,12 @@ function AppRoutes() {
         </ProtectedRoute>
       } />
       
+      <Route path="/applications/:id/edit" element={
+        <ProtectedRoute>
+          <EditApplicationPage />
+        </ProtectedRoute>
+      } />
+      
       <Route path="/interviews" element={
         <ProtectedRoute>
           <InterviewsPage />
@@ -68,6 +78,12 @@ function AppRoutes() {
       <Route path="/reminders" element={
         <ProtectedRoute>
           <RemindersPage />
+        </ProtectedRoute>
+      } />
+      
+      <Route path="/profile" element={
+        <ProtectedRoute>
+          <ProfilePage />
         </ProtectedRoute>
       } />
       

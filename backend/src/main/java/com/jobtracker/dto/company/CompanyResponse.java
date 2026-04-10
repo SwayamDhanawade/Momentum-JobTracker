@@ -18,6 +18,7 @@ public class CompanyResponse {
     private String location;
     private String logoUrl;
     private String careersPageUrl;
+    private Long userId;
     private Long createdById;
     private String createdAt;
 }

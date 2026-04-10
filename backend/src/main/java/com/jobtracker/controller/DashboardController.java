@@ -1,9 +1,11 @@
 package com.jobtracker.controller;
 
 import com.jobtracker.dto.dashboard.DashboardResponse;
+import com.jobtracker.security.SecurityUtils;
 import com.jobtracker.service.DashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,9 +14,12 @@ import org.springframework.web.bind.annotation.*;
 public class DashboardController {
     
     private final DashboardService dashboardService;
+    private final SecurityUtils securityUtils;
     
     @GetMapping
-    public ResponseEntity<DashboardResponse> getDashboard(@RequestHeader("X-User-Id") Long userId) {
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<DashboardResponse> getDashboard() {
+        Long userId = securityUtils.getCurrentUserId();
         return ResponseEntity.ok(dashboardService.getDashboard(userId));
     }
 }

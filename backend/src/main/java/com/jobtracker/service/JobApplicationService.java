@@ -4,10 +4,12 @@ import com.jobtracker.dto.application.JobApplicationRequest;
 import com.jobtracker.dto.application.JobApplicationResponse;
 import com.jobtracker.dto.application.StatusUpdateRequest;
 import com.jobtracker.entity.ApplicationStatus;
+import com.jobtracker.entity.ApplicationStatusHistory;
 import com.jobtracker.entity.Company;
 import com.jobtracker.entity.JobApplication;
 import com.jobtracker.entity.User;
 import com.jobtracker.exception.ResourceNotFoundException;
+import com.jobtracker.repository.ApplicationStatusHistoryRepository;
 import com.jobtracker.repository.ApplicationStatusRepository;
 import com.jobtracker.repository.CompanyRepository;
 import com.jobtracker.repository.JobApplicationRepository;
@@ -28,6 +30,7 @@ public class JobApplicationService {
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
     private final ApplicationStatusRepository applicationStatusRepository;
+    private final ApplicationStatusHistoryRepository applicationStatusHistoryRepository;
     
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
     
@@ -66,6 +69,9 @@ public class JobApplicationService {
                 .build();
         
         JobApplication saved = jobApplicationRepository.save(application);
+        
+        createStatusHistory(saved, null, status, user);
+        
         return mapToResponse(saved);
     }
     
@@ -127,6 +133,10 @@ public class JobApplicationService {
         JobApplication application = jobApplicationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Job application not found"));
         
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        
+        ApplicationStatus oldStatus = application.getStatus();
         ApplicationStatus newStatus = applicationStatusRepository.findById(request.getStatusId())
                 .orElseThrow(() -> new ResourceNotFoundException("Status not found"));
         
@@ -136,7 +146,21 @@ public class JobApplicationService {
         }
         
         JobApplication updated = jobApplicationRepository.save(application);
+        
+        createStatusHistory(updated, oldStatus, newStatus, user);
+        
         return mapToResponse(updated);
+    }
+    
+    private void createStatusHistory(JobApplication application, ApplicationStatus oldStatus, ApplicationStatus newStatus, User user) {
+        ApplicationStatusHistory history = ApplicationStatusHistory.builder()
+                .application(application)
+                .oldStatus(oldStatus)
+                .newStatus(newStatus)
+                .changedBy(user)
+                .build();
+        
+        applicationStatusHistoryRepository.save(history);
     }
     
     @Transactional

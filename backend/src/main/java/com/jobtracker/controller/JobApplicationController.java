@@ -3,10 +3,12 @@ package com.jobtracker.controller;
 import com.jobtracker.dto.application.JobApplicationRequest;
 import com.jobtracker.dto.application.JobApplicationResponse;
 import com.jobtracker.dto.application.StatusUpdateRequest;
+import com.jobtracker.security.SecurityUtils;
 import com.jobtracker.service.JobApplicationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,32 +19,38 @@ import java.util.List;
 public class JobApplicationController {
     
     private final JobApplicationService jobApplicationService;
+    private final SecurityUtils securityUtils;
     
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<JobApplicationResponse> create(
-            @Valid @RequestBody JobApplicationRequest request,
-            @RequestHeader("X-User-Id") Long userId) {
+            @Valid @RequestBody JobApplicationRequest request) {
+        Long userId = securityUtils.getCurrentUserId();
         return ResponseEntity.ok(jobApplicationService.create(request, userId));
     }
     
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<JobApplicationResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(jobApplicationService.getById(id));
     }
     
     @GetMapping
-    public ResponseEntity<List<JobApplicationResponse>> getAll(@RequestHeader("X-User-Id") Long userId) {
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<JobApplicationResponse>> getAll() {
+        Long userId = securityUtils.getCurrentUserId();
         return ResponseEntity.ok(jobApplicationService.getAllByUserId(userId));
     }
     
     @GetMapping("/status/{statusId}")
-    public ResponseEntity<List<JobApplicationResponse>> getByStatus(
-            @PathVariable Long statusId,
-            @RequestHeader("X-User-Id") Long userId) {
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<JobApplicationResponse>> getByStatus(@PathVariable Long statusId) {
+        Long userId = securityUtils.getCurrentUserId();
         return ResponseEntity.ok(jobApplicationService.getByUserIdAndStatus(userId, statusId));
     }
     
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<JobApplicationResponse> update(
             @PathVariable Long id,
             @Valid @RequestBody JobApplicationRequest request) {
@@ -50,14 +58,16 @@ public class JobApplicationController {
     }
     
     @PatchMapping("/{id}/status")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<JobApplicationResponse> updateStatus(
             @PathVariable Long id,
-            @RequestBody StatusUpdateRequest request,
-            @RequestHeader("X-User-Id") Long userId) {
+            @RequestBody StatusUpdateRequest request) {
+        Long userId = securityUtils.getCurrentUserId();
         return ResponseEntity.ok(jobApplicationService.updateStatus(id, request, userId));
     }
     
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         jobApplicationService.delete(id);
         return ResponseEntity.noContent().build();

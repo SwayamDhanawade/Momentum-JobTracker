@@ -29,3 +29,11 @@ export interface UpcomingReminder {
   date: string;
   time?: string;
 }
+
+export interface DashboardStats {
+  totalApplications: number;
+  applicationsThisMonth: number;
+  interviewsThisWeek: number;
+  pendingReminders: number;
+  statusCounts: Record<string, number>;
+}

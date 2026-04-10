@@ -12,4 +12,5 @@ public interface InterviewRepository extends JpaRepository<Interview, Long> {
     List<Interview> findByApplicationId(Long applicationId);
     List<Interview> findByUserIdAndDateBetween(Long userId, LocalDate start, LocalDate end);
     List<Interview> findByUserIdAndDate(Long userId, LocalDate date);
+    List<Interview> findByUserIdAndDateBetweenOrderByDateAsc(Long userId, LocalDate start, LocalDate end);
 }

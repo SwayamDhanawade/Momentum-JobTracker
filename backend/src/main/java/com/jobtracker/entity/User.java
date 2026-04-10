@@ -41,6 +41,9 @@ public class User {
     @Column(nullable = false)
     private Boolean enabled = true;
     
+    @Column(nullable = false)
+    private String role = "ROLE_USER";
+    
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
     
@@ -55,5 +58,9 @@ public class User {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+    
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 }

@@ -13,4 +13,5 @@ public interface ReminderRepository extends JpaRepository<Reminder, Long> {
     List<Reminder> findByUserIdAndDateBetween(Long userId, LocalDate start, LocalDate end);
     List<Reminder> findByUserIdAndIsCompletedFalse(Long userId);
     List<Reminder> findByDateAndIsCompletedFalse(LocalDate date);
+    List<Reminder> findByUserIdAndIsCompletedFalseAndDateBefore(Long userId, LocalDate date);
 }

@@ -4,6 +4,7 @@ import com.jobtracker.dto.auth.*;
 import com.jobtracker.entity.User;
 import com.jobtracker.exception.BadRequestException;
 import com.jobtracker.repository.UserRepository;
+import com.jobtracker.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ public class AuthService {
     
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
     
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -27,16 +29,18 @@ public class AuthService {
                 .lastName(request.getLastName())
                 .phone(request.getPhone())
                 .enabled(true)
+                .role("ROLE_USER")
                 .build();
         
         User saved = userRepository.save(user);
+        String token = jwtUtil.generateToken(saved.getEmail());
         
         return AuthResponse.builder()
                 .id(saved.getId())
                 .email(saved.getEmail())
-                .firstName(saved.getFirstName())
-                .lastName(saved.getLastName())
-                .token("token-" + saved.getId())
+                .fullName(saved.getFullName())
+                .phone(saved.getPhone())
+                .token(token)
                 .type("Bearer")
                 .build();
     }
@@ -49,12 +53,14 @@ public class AuthService {
             throw new BadRequestException("Invalid email or password");
         }
         
+        String token = jwtUtil.generateToken(user.getEmail());
+        
         return AuthResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .token("token-" + user.getId())
+                .fullName(user.getFullName())
+                .phone(user.getPhone())
+                .token(token)
                 .type("Bearer")
                 .build();
     }

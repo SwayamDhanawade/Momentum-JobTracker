@@ -15,3 +15,9 @@ export interface User {
   skills?: string;
   enabled: boolean;
 }
+
+export interface ApplicationStatusOption {
+  id: number;
+  name: string;
+  color: string;
+}

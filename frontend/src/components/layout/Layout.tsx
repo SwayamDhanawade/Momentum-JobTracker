@@ -12,7 +12,7 @@ function Layout({ children }: LayoutProps) {
       <Header />
       <main className="main-content">{children}</main>
       <footer className="footer">
-        <p>&copy; 2024 Job Application Tracker</p>
+        <p>&copy; 2024 Momentum</p>
       </footer>
     </div>
   );
