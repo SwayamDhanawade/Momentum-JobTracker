@@ -244,23 +244,6 @@ The application initializes with these statuses:
 5. Set output directory: `dist`
 6. Add environment variable: `VITE_API_BASE_URL=/api`
 
-## Portfolio Highlights
-
-### Technical Achievements
-
-- **Full-Stack Architecture**: Built a complete monorepo with RESTful API and React SPA
-- **Authentication System**: Implemented JWT-based security with stateless session management
-- **Database Design**: Designed normalized schema with JPA entities and proper relationships
-- **Error Handling**: Created centralized exception handling with meaningful error responses
-- **Environment Config**: Configured multi-environment support for seamless deployments
-
-### Key Resume Points
-
-- Developed a full-stack job application tracking system using Java Spring Boot and React
-- Implemented JWT authentication with role-based access control for secure user management
-- Built a responsive SPA with TypeScript, featuring dashboard analytics and real-time status updates
-- Designed RESTful API endpoints with proper validation, error handling, and environment-based configuration
-
 ## Future Improvements
 
 - [ ] Email notifications for reminders
@@ -268,7 +251,6 @@ The application initializes with these statuses:
 - [ ] Resume/CV upload functionality
 - [ ] Analytics and reporting charts
 - [ ] Multiple user collaboration
-- [ ] Dark mode theme
 - [ ] Export data to PDF/CSV
 
 ## License
