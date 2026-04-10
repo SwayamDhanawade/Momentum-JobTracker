@@ -1,0 +1,96 @@
+.applications-page {
+  padding: 20px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filters {
+  margin-bottom: 20px;
+}
+
+.filters select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.applications-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.application-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s;
+}
+
+.application-card:hover {
+  transform: translateY(-2px);
+}
+
+.application-card h3 {
+  margin: 0 0 10px 0;
+}
+
+.company-name {
+  color: #666;
+  margin: 5px 0;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.85rem;
+  margin: 10px 0;
+}
+
+.applied-date {
+  color: #999;
+  font-size: 0.9rem;
+  margin: 10px 0 0 0;
+}
+
+.not-found-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.not-found-page h1 {
+  font-size: 6rem;
+  margin: 0;
+  color: #ccc;
+}
+
+.not-found-page h2 {
+  margin: 10px 0;
+}
+
+.not-found-page p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.no-applications {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #999;
+  padding: 40px;
+  font-size: 1.1rem;
+}
