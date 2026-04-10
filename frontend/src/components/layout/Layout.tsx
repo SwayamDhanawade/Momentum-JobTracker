@@ -12,7 +12,7 @@ function Layout({ children }: LayoutProps) {
       <Header />
       <main className="main-content">{children}</main>
       <footer className="footer">
-        <p>&copy; 2024 Momentum</p>
+        <p>&copy; 2026 Swayam Dhanawade. Made with 💙 and code</p>
       </footer>
     </div>
   );
